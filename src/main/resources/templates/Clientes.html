@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>Manutenção de Clientes</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+
+</head>
+<body>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h1 class="panel-title">Manutenção de Clientes</h1>
+		</div>
+		<div class="panel-body">
+			<form class="form-inline" method="POST" th:object="${cliente}" th:action="@{/clientes}">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Nome" th:field="*{nome}" />
+					<input type="text" class="form-control" placeholder="Telefone" 
+						th:field="*{telefone}" />
+					<input type="text" class="form-control" placeholder="Email" th:field="*{email}" />
+					<button type="submit" class="btn btn-primary">Adicionar</button>
+				</div>
+			</form>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Nome</th>
+						<th>Telefone</th>
+						<th>Email</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="cliente : ${clientes}">
+						<th th:text="${cliente.id}"></th>
+						<th th:text="${cliente.nome}"></th>
+						<th th:text="${cliente.telefone}"></th>
+						<th th:text="${cliente.email}"></th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
