@@ -1,12 +1,12 @@
 package com.progweb.financeiro.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Cliente implements  Serializable{
@@ -14,8 +14,7 @@ public class Cliente implements  Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(generator = "increment")
-	@GenericGenerator(name="increment", strategy="increment")
+	@GeneratedValue()
 	private long id;
 	
 	private String nome;
@@ -23,6 +22,9 @@ public class Cliente implements  Serializable{
 	private String telefone;
 	
 	private String email;
+	
+	@OneToMany
+	private List<Recebimento> recebimentos;
 	
 	public long getId() {
 		return id;
@@ -47,5 +49,37 @@ public class Cliente implements  Serializable{
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public List<Recebimento> getRecebimentos() {
+		return recebimentos;
+	}
+	public void setRecebimentos(List<Recebimento> recebimentos) {
+		this.recebimentos = recebimentos;
+	}
+	
+	@Override
+	public String toString() {
+		return nome;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cliente other = (Cliente) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 }

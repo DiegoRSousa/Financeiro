@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="LayoutPadrao">
+<head>
+	<title>Manutenção de Recebimentos</title>
+</head>
+<section layout:fragment="conteudo">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h1 class="panel-title">Manutenção de Recebimentos</h1>
+		</div>
+		<div class="panel-body">
+			<form class="form-inline" method="POST" th:object="${recebimento}" th:action="@{/recebimentos}">
+				<div class="form-group">
+					<select class="form-control" th:field="*{cliente}">
+						<option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nome}" />
+					</select>
+					<input type="text" class="form-control" placeholder="Data" th:field="*{data}"/>
+					<input type="text" class="form-control" placeholder="Valor" th:field="*{valor}"/>
+					<select class="form-control" name="status">
+						<option th:each="status : ${todosStatus}" th:value="${status}" th:text="${status.descricao}" />
+					</select>
+					<button type="submit" class="btn btn-primary">Receber</button>
+				</div>
+			</form>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Cliente</th>
+						<th>Data</th>
+						<th>Valor</th>
+						<th>Status</th>
+						<th>Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="recebimento : ${recebimentos}">
+						<td th:text="${recebimento.id}"></td>
+						<td th:text="${recebimento.cliente}"></td>
+						<td th:text="${recebimento.data}"></td>
+						<td th:text="${recebimento.valor}"></td>
+						<td th:text="${recebimento.status}"></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+</html>
+		

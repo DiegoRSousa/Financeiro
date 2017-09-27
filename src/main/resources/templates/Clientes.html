@@ -23,18 +23,20 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="Layou
 			<table class="table">
 				<thead>
 					<tr>
-						<th>Id</th>
+						<th>#</th>
 						<th>Nome</th>
 						<th>Telefone</th>
 						<th>Email</th>
+						<th>Ações</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="cliente : ${clientes}">
-						<th th:text="${cliente.id}"></th>
-						<th th:text="${cliente.nome}"></th>
-						<th th:text="${cliente.telefone}"></th>
-						<th th:text="${cliente.email}"></th>
+						<td th:text="${cliente.id}"></td>
+						<td th:text="${cliente.nome}"></td>
+						<td th:text="${cliente.telefone}"></td>
+						<td th:text="${cliente.email}"></td>
+						<td></td>
 					</tr>
 				</tbody>
 			</table>
