@@ -6,40 +6,53 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="Layou
 	<title>Manutenção de Clientes</title>
 </head>
 <section layout:fragment="conteudo">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h1 class="panel-title">Manutenção de Clientes</h1>
-		</div>
-		<div class="panel-body">
-			<form class="form-inline" method="POST" th:object="${cliente}" th:action="@{/clientes}">
-				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Nome" th:field="*{nome}" />
-					<input type="text" class="form-control" placeholder="Telefone" 
-						th:field="*{telefone}" />
-					<input type="text" class="form-control" placeholder="Email" th:field="*{email}" />
-					<button type="submit" class="btn btn-primary">Adicionar</button>
-				</div>
-			</form>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>Nome</th>
-						<th>Telefone</th>
-						<th>Email</th>
-						<th>Ações</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="cliente : ${clientes}">
-						<td th:text="${cliente.id}"></td>
-						<td th:text="${cliente.nome}"></td>
-						<td th:text="${cliente.telefone}"></td>
-						<td th:text="${cliente.email}"></td>
-						<td></td>
-					</tr>
-				</tbody>
-			</table>
+	<div id="main" class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1 class="panel-title">Cadastro de Clientes</h1>
+			</div>
+			<div class="panel-body">
+				<form class="form-inline" method="POST" th:object="${cliente}" th:action="@{/clientes}">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Nome" th:field="*{nome}" />
+						<input type="text" class="form-control" placeholder="Telefone" 
+							th:field="*{telefone}" />
+						<input type="text" class="form-control" placeholder="Email" th:field="*{email}" />
+						<button type="submit" class="btn btn-primary">Adicionar</button>
+					</div>
+				</form>
+			</div>
+		</div>	
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1 class="panel-title">Listagem de Clientes</h1>
+			</div>
+			<div class="panel-body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Nome</th>
+							<th>Telefone</th>
+							<th>Email</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="cliente : ${clientes}">
+							<td th:text="${cliente.id}"></td>
+							<td th:text="${cliente.nome}"></td>
+							<td th:text="${cliente.telefone}"></td>
+							<td th:text="${cliente.email}"></td>
+							<td>
+								<a class="btn btn-success btn-xs" href="#">Editar</a>
+								<a class="btn btn-warning btn-xs" href="#">Receber</a>
+								<a class="btn btn-danger btn-xs" href="#">Excluir</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </section>
