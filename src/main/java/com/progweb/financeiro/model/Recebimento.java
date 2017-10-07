@@ -29,6 +29,8 @@ public class Recebimento implements Serializable{
 	
 	@Enumerated(EnumType.STRING)
 	private StatusRecebimento status;
+	
+	private String historico;
 
 	public long getId() {
 		return id;
@@ -68,6 +70,14 @@ public class Recebimento implements Serializable{
 
 	public void setStatus(StatusRecebimento status) {
 		this.status = status;
+	}
+	
+	public String getHistorico() {
+		return historico;
+	}
+	
+	public void setHistorico(String historico) {
+		this.historico = historico;
 	}
 
 	@Override
