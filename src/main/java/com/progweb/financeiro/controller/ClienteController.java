@@ -3,6 +3,8 @@ package com.progweb.financeiro.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +30,15 @@ public class ClienteController {
 	}
 	
 	@PostMapping 
-	public String salvar(Cliente clinete, RedirectAttributes attributes) {
+	public ModelAndView salvar(@Validated Cliente clinete, Errors errors, RedirectAttributes attributes) {
+		if(errors.hasErrors()) {
+			ModelAndView modelAndView = new ModelAndView("Clientes");
+			modelAndView.addObject("clientes", clientes.findAll());
+			return modelAndView;
+		}
+				
 		this.clientes.save(clinete);
 		attributes.addFlashAttribute("mensagem", "Cliente salvo com sucesso!");
-		return "redirect:/clientes";
+		return new ModelAndView("redirect:/clientes");
 	}
 }

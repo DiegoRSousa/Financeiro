@@ -3,12 +3,17 @@ package com.progweb.financeiro.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
+@Table(name = "clientes")
 public class Cliente implements  Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -17,10 +22,14 @@ public class Cliente implements  Serializable{
 	@GeneratedValue()
 	private long id;
 	
+	@NotEmpty(message = "O nome é obrigatório!")
+	@Column(length = 64, nullable = false)
 	private String nome;
 	
+	@Column(length = 11)
 	private String telefone;
 	
+	@Column(length = 64)
 	private String email;
 	
 	@OneToMany
