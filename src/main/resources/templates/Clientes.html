@@ -4,6 +4,7 @@ xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="LayoutPadrao">
 <head>
 	<title>Manutenção de Clientes</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
 </head>
 <section layout:fragment="conteudo">
 	<div id="main" class="container-fluid">
@@ -24,6 +25,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="Layou
 						</div>
 					</div>
 					<div class="form-group">
+						<input type="hidden" th:field="*{id}" />
 						<input type="text" class="form-control" placeholder="Nome" th:field="*{nome}" />
 						<input type="text" class="form-control" placeholder="Telefone" 
 							th:field="*{telefone}" />
@@ -39,7 +41,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="Layou
 			</div>
 			<div class="panel-body">
 				<div class="input-group h2 col-md-4">
-					<input class="form-control" id="search" type="text" placeholder="Pesquisar Clientes" />
+					<input class="form-control" id="filtra-tabela" type="text" placeholder="Pesquisar Clientes" />
 				</div>
 				<div id="list" class="row">
 					<div class="table-responsive">
@@ -53,15 +55,17 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="Layou
 									<th>Ações</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr th:each="cliente : ${clientes}">
+							<tbody id="tabela-clientes" >
+								<tr th:each="cliente : ${clientes}" class="cliente">
 									<td th:text="${cliente.id}"></td>
-									<td th:text="${cliente.nome}"></td>
+									<td th:text="${cliente.nome}" class="info-nome"></td>
 									<td th:text="${cliente.telefone}"></td>
 									<td th:text="${cliente.email}"></td>
 									<td>
-										<a class="btn btn-success btn-xs" href="#">Editar</a>
-										<a class="btn btn-danger btn-xs" href="#">Excluir</a>
+										<a class="btn btn-success btn-xs" th:href="@{/clientes/{id}(id=${cliente.id})}">Editar</a>
+										<a class="delete btn btn-danger btn-xs" th:href="@{/clientes/delete/{id}(id=${cliente.id})}">
+											Excluir
+										</a>
 									</td>
 								</tr>
 							</tbody>
@@ -71,5 +75,6 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="Layou
 			</div>
 		</div>
 	</div>
+	<script th:src="@{/js/filtra.js}"></script>
 </section>
 </html>

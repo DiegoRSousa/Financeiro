@@ -10,8 +10,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "recebimentos")
 public class Recebimento implements Serializable{
 
 	private static final long serialVersionUID = 1L;
