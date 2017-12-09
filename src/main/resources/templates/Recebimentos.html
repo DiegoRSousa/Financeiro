@@ -14,17 +14,24 @@
 			</div>
 			<div class="panel-body">
 				<form class="form-inline" method="POST" th:object="${recebimento}" th:action="@{/recebimentos}">
+					<div layout:include="MensagemSucesso"></div>
+					<div layout:include="MensagemErro"></div>
+					
 					<div class="form-group">
 						<select class="form-control" th:field="*{cliente}">
 							<option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nome}" />
 						</select> 
-						<input type="text" class="form-control" placeholder="Data" th:field="*{data}" /> 
+						<input type="text" class="form-control" placeholder="Data" th:field="*{data}" 
+							data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
+							data-date-autoclose="true" data-date-today-highlight="true" data-date-orientation="botton" />
+							
+							 
 						<input type="text" class="form-control" placeholder="Valor" th:field="*{valor}" />
 						<input type="text" class="form-control" placeholder="Histórico" th:field="*{historico}" /> 
 						<select class="form-control" name="status">
 							<option th:each="status : ${todosStatus}" th:value="${status}" th:text="${status.descricao}" />
 						</select>
-						<button type="submit" class="btn btn-primary">Receber</button>
+						<button type="submit" class="btn btn-primary">Salvar</button>
 					</div>
 				</form>
 			</div>
@@ -34,33 +41,40 @@
 				<h1 class="panel-title">Listagem de Recebimentos</h1>
 			</div>
 			<div class="panel-body">
-				<table class="table">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Cliente</th>
-							<th>Data</th>
-							<th>Valor</th>
-							<th>Histórico</th>
-							<th>Status</th>
-							<th>Ações</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="recebimento : ${recebimentos}">
-							<td th:text="${recebimento.id}"></td>
-							<td th:text="${recebimento.cliente}"></td>
-							<td th:text="${recebimento.data}"></td>
-							<td th:text="${recebimento.valor}"></td>
-							<td th:text="${recebimento.historico}"></td>
-							<td th:text="${recebimento.status}"></td>
-							<td>
-								<a class="btn btn-warning btn-xs" href="#">Receber</a> 
-								<a class="btn btn-danger btn-xs" href="#">Cancelar</a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="input-group h2 col-md-4">
+					<input class="form-control" id="filtra-tabela" type="text" placeholder="Pesquisar Clientes" />
+				</div>
+				<div id="list" class="row">
+					<div class="table-responsive">
+						<table class="table table-borded table-striped">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Cliente</th>
+									<th>Data</th>
+									<th>Valor</th>
+									<th>Histórico</th>
+									<th>Status</th>
+									<th>Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="recebimento : ${recebimentos}">
+									<td th:text="${recebimento.id}"></td>
+									<td th:text="${recebimento.cliente}"></td>
+									<td th:text="${recebimento.data}"></td>
+									<td th:text="${recebimento.valor}"></td>
+									<td th:text="${recebimento.historico}"></td>
+									<td th:text="${recebimento.status}"></td>
+									<td>
+										<a class="btn btn-warning btn-xs" href="#">Receber</a> 
+										<a class="btn btn-danger btn-xs" href="#">Cancelar</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

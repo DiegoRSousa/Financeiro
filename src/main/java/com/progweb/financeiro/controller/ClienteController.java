@@ -21,7 +21,7 @@ public class ClienteController {
 
 	@Autowired
 	private Clientes clientes;
-
+	
 	@GetMapping
 	public ModelAndView listar() {
 		ModelAndView modelAndView = new ModelAndView("Clientes");
@@ -52,8 +52,9 @@ public class ClienteController {
 	}
 	
 	@RequestMapping("delete/{id}")
-	public ModelAndView deletar(@PathVariable("id") Cliente cliente) {
+	public String deletar(@PathVariable("id") Cliente cliente, RedirectAttributes attributes) {
 		clientes.delete(cliente);
-		return listar();
+		attributes.addFlashAttribute("mensagem", "Cliente excluído com sucesso!");
+		return "redirect:/clientes";
 	}
 }

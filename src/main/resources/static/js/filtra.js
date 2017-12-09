@@ -6,8 +6,7 @@ campoFiltro.addEventListener("input", function() {
 	if(this.value.length > 0) {
 		for(var i = 0; i < clientes.length; i++) {
 			var cliente = clientes[i];
-			var tdNome = cliente.querySelector(".info-nome");
-			var nome = tdNome.textContent;
+			var nome = cliente.querySelector(".info-nome").textContent;
 			
 			var expressao = new RegExp(this.value, "i");
 			if(expressao.test(nome)) {

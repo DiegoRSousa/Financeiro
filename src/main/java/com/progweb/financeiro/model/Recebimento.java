@@ -8,9 +8,18 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 @Entity
 @Table(name = "recebimentos")
@@ -19,14 +28,21 @@ public class Recebimento implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 	
 	@ManyToOne
 	private Cliente cliente;
 	
+	@NotNull(message = "A data é obrigatória!")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
 	private Date data;
 	
+	@NotNull(message = "O valor é obrigatório!")
+	@DecimalMin(value = "0.01", message = "Valor não pode ser menor que R$ 0,01")
+	@DecimalMax(value = "9999999.99", message ="Valor não pode ser maior que R$ 999.999,99")
+	@NumberFormat(pattern = "#,##0,00")
 	private BigDecimal valor;
 	
 	@Enumerated(EnumType.STRING)
