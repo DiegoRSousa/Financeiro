@@ -1,7 +1,7 @@
 var campoFiltro = document.querySelector("#filtra-tabela");
 
 campoFiltro.addEventListener("input", function() {
-	var clientes = document.querySelectorAll(".cliente");
+	var clientes = document.querySelectorAll(".entidade");
 	
 	if(this.value.length > 0) {
 		for(var i = 0; i < clientes.length; i++) {
@@ -14,7 +14,6 @@ campoFiltro.addEventListener("input", function() {
 			} else {
 				cliente.classList.add("invisivel");
 			}
-			
 		}
 	} else {
 		for(var i = 0; i < clientes.length; i++) {

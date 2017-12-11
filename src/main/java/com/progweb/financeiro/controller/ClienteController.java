@@ -1,6 +1,5 @@
 package com.progweb.financeiro.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -21,7 +20,7 @@ public class ClienteController {
 
 	@Autowired
 	private Clientes clientes;
-	
+
 	@GetMapping
 	public ModelAndView listar() {
 		ModelAndView modelAndView = new ModelAndView("Clientes");
@@ -29,20 +28,20 @@ public class ClienteController {
 		modelAndView.addObject(new Cliente());
 		return modelAndView;
 	}
-	
-	@PostMapping 
+
+	@PostMapping
 	public ModelAndView salvar(@Validated Cliente cliente, Errors errors, RedirectAttributes attributes) {
-		if(errors.hasErrors()) {
+		if (errors.hasErrors()) {
 			ModelAndView modelAndView = new ModelAndView("Clientes");
 			modelAndView.addObject("clientes", clientes.findAll());
 			return modelAndView;
 		}
-				
+
 		this.clientes.save(cliente);
 		attributes.addFlashAttribute("mensagem", "Cliente salvo com sucesso!");
 		return new ModelAndView("redirect:/clientes");
 	}
-	
+
 	@RequestMapping("{id}")
 	public ModelAndView editar(@PathVariable("id") Cliente cliente) {
 		ModelAndView modelAndView = new ModelAndView("Clientes");
@@ -50,7 +49,7 @@ public class ClienteController {
 		modelAndView.addObject(cliente);
 		return modelAndView;
 	}
-	
+
 	@RequestMapping("delete/{id}")
 	public String deletar(@PathVariable("id") Cliente cliente, RedirectAttributes attributes) {
 		clientes.delete(cliente);

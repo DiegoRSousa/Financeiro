@@ -48,7 +48,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="Layou
 								</tr>
 							</thead>
 							<tbody id="tabela-clientes" >
-								<tr th:each="cliente : ${clientes}" class="cliente">
+								<tr th:each="cliente : ${clientes}" class="entidade">
 									<td th:text="${cliente.id}"></td>
 									<td th:text="${cliente.nome}" class="info-nome"></td>
 									<td th:text="${cliente.telefone}"></td>
@@ -69,6 +69,5 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="Layou
 			</div>
 		</div>
 	</div>
-	<script th:src="@{/js/filtra.js}"></script>
 </section>
 </html>

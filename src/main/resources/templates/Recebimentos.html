@@ -24,9 +24,7 @@
 						<input type="text" class="form-control" placeholder="Data" th:field="*{data}" 
 							data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
 							data-date-autoclose="true" data-date-today-highlight="true" data-date-orientation="botton" />
-							
-							 
-						<input type="text" class="form-control" placeholder="Valor" th:field="*{valor}" />
+						<input type="text" class="form-control js-currency" placeholder="Valor" th:field="*{valor}" />
 						<input type="text" class="form-control" placeholder="Histórico" th:field="*{historico}" /> 
 						<select class="form-control" name="status">
 							<option th:each="status : ${todosStatus}" th:value="${status}" th:text="${status.descricao}" />
@@ -59,16 +57,26 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="recebimento : ${recebimentos}">
+								<tr th:each="recebimento : ${recebimentos}" 
+										th:classappend="${recebimento.cancelado ? ' entidade cancelado' : 'entidade'}">
 									<td th:text="${recebimento.id}"></td>
-									<td th:text="${recebimento.cliente}"></td>
-									<td th:text="${recebimento.data}"></td>
-									<td th:text="${recebimento.valor}"></td>
+									<td th:text="${recebimento.cliente}" class="info-nome"></td>
+									<td th:text="${{recebimento.data}}"></td>
+									<td th:text="|R$ ${{recebimento.valor}}"></td>
 									<td th:text="${recebimento.historico}"></td>
-									<td th:text="${recebimento.status}"></td>
+									<td th:attr="data-role=${recebimento.id}">
+										<span class="label" th:text="${recebimento.status.descricao}"
+											th:classappend="${recebimento.pendente ? 'label-danger' : 'label-success'}"></span>
+									</td>
 									<td>
-										<a class="btn btn-warning btn-xs" href="#">Receber</a> 
-										<a class="btn btn-danger btn-xs" href="#">Cancelar</a>
+										<a class="btn btn-warning btn-xs" th:if="${recebimento.pendente and !recebimento.cancelado}"
+												th:href="@{/recebimentos/receber/{id}(id=${recebimento.id})}">
+											Receber
+										</a> 
+										<a class="btn btn-danger btn-xs" th:if="${!recebimento.cancelado and recebimento.pendente}" 
+												th:href="@{/recebimentos/cancelar/{id}(id=${recebimento.id})}">
+											Cancelar
+										</a>
 									</td>
 								</tr>
 							</tbody>

@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -18,6 +17,7 @@ import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -28,7 +28,8 @@ public class Recebimento implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name = "increment", strategy = "increment")
 	private long id;
 	
 	@ManyToOne
@@ -49,6 +50,8 @@ public class Recebimento implements Serializable{
 	private StatusRecebimento status;
 	
 	private String historico;
+	
+	private boolean cancelado;
 
 	public long getId() {
 		return id;
@@ -96,6 +99,18 @@ public class Recebimento implements Serializable{
 	
 	public void setHistorico(String historico) {
 		this.historico = historico;
+	}
+	
+	public boolean isPendente() {
+		return StatusRecebimento.Pendente.equals(this.status);
+	}
+	
+	public void setCancelado(boolean cancelado) {
+		this.cancelado = cancelado;
+	}
+	
+	public boolean getCancelado() {
+		return cancelado;
 	}
 
 	@Override

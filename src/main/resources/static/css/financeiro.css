@@ -1,3 +1,7 @@
 .invisivel {
 	display: none;
 }
+
+.cancelado {
+	color: red;
+}

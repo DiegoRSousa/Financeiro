@@ -9,6 +9,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,22 +26,22 @@ public class RecebimentoController {
 
 	@Autowired
 	private Recebimentos recebimentos;
-	
+
 	@Autowired
 	private Clientes clientes;
-	
+
 	@GetMapping
 	public ModelAndView listar() {
 		ModelAndView modelAndView = new ModelAndView("Recebimentos");
 		modelAndView.addObject("recebimentos", recebimentos.findAll());
 		modelAndView.addObject(new Recebimento());
-		modelAndView.addObject("clientes", clientes.findAll());
+		modelAndView.addObject("clientes", clientes.findAllByOrderByIdAsc());
 		return modelAndView;
 	}
-	
+
 	@PostMapping
 	public ModelAndView salvar(@Validated Recebimento recebimento, Errors errors, RedirectAttributes attributes) {
-		if(errors.hasErrors()) {
+		if (errors.hasErrors()) {
 			ModelAndView modelAndView = new ModelAndView("Recebimentos");
 			modelAndView.addObject("recebimentos", recebimentos.findAll());
 			modelAndView.addObject("clientes", clientes.findAll());
@@ -51,8 +52,23 @@ public class RecebimentoController {
 		attributes.addFlashAttribute("mensagem", "Recebimento salvo com sucesso!");
 		return new ModelAndView("redirect:/recebimentos");
 	}
-	
-	
+
+	@RequestMapping("/receber/{id}")
+	public String receber(@PathVariable("id") Recebimento recebimento, RedirectAttributes attributes) {
+		recebimento.setStatus(StatusRecebimento.Recebido);
+		recebimentos.save(recebimento);
+		attributes.addFlashAttribute("mensagem", "Recebimento realizado com sucesso!");
+		return "redirect:/recebimentos";
+	}
+
+	@RequestMapping("/cancelar/{id}")
+	public String cancelar(@PathVariable("id") Recebimento recebimento, RedirectAttributes attributes) {
+		attributes.addFlashAttribute("mensagem", "Recebimento cancelado com sucesso!");
+		recebimento.setCancelado(true);
+		recebimentos.save(recebimento);
+		return "redirect:/recebimentos";
+	}
+
 	@ModelAttribute("todosStatus")
 	public List<StatusRecebimento> todosStatus() {
 		return Arrays.asList(StatusRecebimento.values());
